@@ -1,0 +1,90 @@
+{% extends 'dealer_base.html' %} {% block content %}
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #ecf0f1;
+    margin: 0;
+    /* padding: 0; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header-text {
+    color: #fe5b3d;
+  }
+
+  .edit-form {
+    width: 500px;
+    background-color: white;
+    /* padding: 30px; */
+    margin: 40px;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: black;
+    font-size: 18px;
+  }
+
+  input[type="text"],
+  textarea,
+  input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ecf0f1;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    /* margin-bottom: 15px; */
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus,
+  input[type="submit"]:hover {
+    /* border-color: #ada50d;
+    background-color: #0f3d22;
+    color: #ffffff; */
+    border-color: #034039;
+    background-color: #fff;
+    color: black;
+    font-size: 16px;
+  }
+
+  input[type="submit"] {
+    font-family: "Poppins", sans-serif;
+    background-color: #fe5b3d;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: black;
+    color: #fe5b3d;
+    cursor: pointer;
+  }
+</style>
+
+<div class="edit-form">
+  <h2 class="header-text">EDIT YOUR VEHICLE</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="Save Changes" />
+  </form>
+</div>
+{% endblock %}

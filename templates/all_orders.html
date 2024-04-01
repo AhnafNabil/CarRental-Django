@@ -1,0 +1,91 @@
+{% extends 'dealer_base.html' %} {% block content %}
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #ecf0f1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    color: #fe5b3d;
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 400px;
+    margin-bottom: 30px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+  }
+
+  form {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  input[type="submit"] {
+    font-family: "Poppins", sans-serif;
+    background-color: #fe5b3d;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    padding: 8px 50px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 18px;
+    color: white;
+  }
+
+  input[type="submit"]:hover {
+    background-color: black;
+    color: #fe5b3d;
+  }
+  p{
+    font-size: 20px;
+  }
+</style>
+
+<h1>Your Bookings</h1>
+<ul>
+  {% for booking in bookings %}
+  <li>
+    <p>Car: {{ booking.car.model }}</p>
+    <p>Date: {{ booking.booking_date }}</p>
+    <p>Status: {{booking.status }}</p>
+    {% if booking.status == 'Pending' %}
+    <form method="post" action="{% url 'accept_booking' booking.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Accept" />
+    </form>
+    <form method="post" action="{% url 'reject_booking' booking.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Reject" />
+    </form>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

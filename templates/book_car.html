@@ -1,0 +1,177 @@
+<!-- cars/templates/book_car.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>RENTWISE</title>
+    <style>
+      /* Your existing styles here */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #ecf0f1;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .full-section {
+        display: flex;
+        margin-top: 20px;
+      }
+      .details {
+        background-color: white;
+        color: black;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        box-sizing: border-box;
+        transition: transform 0.3s;
+      }
+      .details:hover {
+        transform: scale(1.05);
+      }
+      img {
+        width: 100%;
+        max-width: 400px;
+        height: 300px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+      }
+      .model {
+        margin-top: -20px;
+      }
+      .header {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        max-height: 480px;
+        margin: 0px 10px;
+        padding: 20px 30px;
+        background-color: #fe5b3d;
+        color: white;
+        border-radius: 10px;
+      }
+      h1 {
+        color: white;
+        font-size: 35px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      h4 {
+        color: #e8e8e8;
+        font-size: 18px;
+        font-weight: 500;
+        justify-content: center;
+        text-align: justify;
+      }
+      a {
+        text-decoration: none;
+        background-color: black;
+        width: 80px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        color: white;
+        margin-top: 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: 500;
+      }
+      a:hover {
+        background-color: white;
+        color: #fe5b3d;
+        cursor: pointer;
+      }
+      b {
+        color: #fe5b3d;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      p {
+        padding-bottom: -10px;
+        color: black;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      form {
+        margin-bottom: 10px;
+      }
+      form input {
+        font-family: "Poppins", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        padding: 3px 10px;
+      }
+      input[type="submit"] {
+        font-weight: 500;
+        border: none;
+        padding: 5px 12px;
+        background-color: #fe5b3d;
+        color: white;
+      }
+      input[type="submit"]:hover {
+        background-color: black;
+        color: #fe5b3d;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="full-section">
+      <div class="header">
+        <h1>Book Your Vehicle</h1>
+        <h4>
+          Plan your journey with ease by booking your desired vehicle on
+          RentWise. Select your preferred date, and experience the convenience
+          of securing the perfect ride for your upcoming adventure. RentWise
+          ensures a seamless booking process, providing you with a hassle-free
+          and reliable way to reserve your vehicle for the date that suits you
+          best. With RentWise, your journey begins with a simple click,
+          promising a smooth and enjoyable ride on your chosen date.
+        </h4>
+        <a href="{% url 'customer_home' %}">Back</a>
+      </div>
+      <div class="details">
+        <div>
+          {% if car.image %}
+          <img src="{{ car.image.url }}" alt="{{ car.model }} Photo" />
+          {% endif %}
+        </div>
+        <div class="model">
+          <p style="margin-bottom: -15px"><b>Car:</b> {{ car.model }}</p>
+          <p style="margin-bottom: -15px"><b>Dealer:</b> {{car.car_dealer}}</p>
+          <p style="margin-bottom: -15px">
+            <b>Capacity:</b> {{ car.capacity }}
+          </p>
+          <p><b>Rent:</b> {{ car.rent }}</p>
+        </div>
+        <div>
+          <form method="post">
+            {% csrf_token %} {% for field in form %}{{ field }}{% endfor %}
+            <input type="submit" value="Book Now" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {% if msg %}
+    <p class="msg">{{ msg }}</p>
+    {% endif %}
+  </body>
+</html>

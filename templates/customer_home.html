@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>RENTWISE</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #ecf0f1;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: center; */
+        min-height: 100vh;
+      }
+      nav {
+        background-color: #fe5b3d;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+      }
+      .img {
+        margin-left: 100px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      nav a {
+        display: inline-block;
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+        margin: 30px;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: transform 0.3s ease-in-out;
+      }
+      nav a:hover {
+        transform: scale(1.2);
+      }
+      .icon {
+        margin-right: 150px;
+      }
+      h1 {
+        color: black;
+        font-size: 40px;
+        margin-bottom: -10px;
+        text-align: center;
+      }
+      h2 {
+        color: #0b1c47;
+        font-size: 30px;
+        font-weight: 600;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      li {
+        background-color: white;
+        color: black;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: calc(33.333% - 20px);
+        box-sizing: border-box;
+        transition: transform 0.3s;
+      }
+      li:hover {
+        transform: scale(1.05);
+      }
+      strong {
+        color: #fe5b3d;
+        font-size: 20px;
+        font-weight: 600;
+      }
+      p {
+        margin: 5px 0;
+      }
+      p.Status {
+        font-weight: bold;
+        color: #28a745;
+      }
+      p.Status.Unavailable {
+        color: #dc3545;
+      }
+      img {
+        width: 100%;
+        height: 300px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+      }
+      a.button {
+        background-color: #fe5b3d;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      a.button:hover {
+        background-color: black;
+        color: #fe5b3d;
+      }
+      .search-label {
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .search-bar {
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        height: 40px;
+        width: 400px;
+        text-indent: 20px;
+        border-radius: 5px;
+      }
+      .search-button {
+        font-family: "Poppins", sans-serif;
+        background-color: #fe5b3d;
+        color: white;
+        margin-left: 10px;
+        height: 47px;
+        padding: 10px 12px;
+        font-size: 16px;
+        font-weight: 500;
+        border: none;
+        border-radius: 5px;
+      }
+      .search-button:hover {
+        background: black;
+        color: #fe5b3d;
+      }
+      .details{
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="img">
+        <img
+          style="width: 100px; height: 60px"
+          src="media/jeep-logo.png"
+          alt=""
+        />
+      </div>
+      <div class="icon">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'customer_dashboard'%}">Your Bookings</a>
+      </div>
+    </nav>
+    <h1>Hey <span style="color: #fe5b3d">{{ user.username }}</span></h1>
+    <h2>Search for Your Desired Cars</h2>
+    <form method="GET" action="{% url 'customer_home' %}">
+      <!-- <label for="model_search" class="search-label">Search by Model:</label> -->
+      <input
+        type="text"
+        id="model_search"
+        name="model_search"
+        placeholder="Search by Model"
+        class="search-bar"
+      />
+      <button type="submit" class="search-button">Search</button>
+    </form>
+    <h2>These are the available vehicles for you</h2>
+    {% if cars %}
+    <ul>
+      {% for car in cars %}
+      <li>
+        {% if car.image %}
+        <img src="{{ car.image.url }}" alt="{{ car.model }} Photo" />
+        {% endif %}
+        <strong>{{ car.model }}</strong>
+        <div class="details">
+          <p><b>Dealer:</b> {{car.car_dealer}}</p>
+          <p><b>Capacity:</b> {{ car.capacity }}</p>
+          <p><b>Rent:</b> {{ car.rent }}</p>
+        </div>
+        <a href="{% url 'book_car' car.id %}" class="button">Book Now</a>
+        <!-- Add more details or actions as needed -->
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Your searched car is not available at the moment.</p>
+    {% endif %}
+  </body>
+</html>
